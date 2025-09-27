@@ -1,4 +1,5 @@
 "use client";
+import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -8,13 +9,25 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import React, { useState } from "react";
+import { addHabit } from "@/lib/features/habitSlice";
+import { AppDispatch } from "@/lib/store";
+import { useDispatch } from "react-redux";
+import { useHabitDispatch } from "@/lib/hook";
 
 const AddHabitForm: React.FC = () => {
+  const dispatch = useHabitDispatch();
   const [name, setName] = useState<string>("");
   const [frequency, setFrequency] = useState<"daily" | "weekly">("daily");
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (name.trim()) {
+      dispatch(
+        addHabit({
+          frequency,
+          name,
+        })
+      );
+    }
   };
 
   return (
