@@ -1,38 +1,35 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-interface Habit {
+interface Task {
   id: string;
   name: string;
   frequency: string;
   completedDates: string[];
   createdAt: string;
 }
-interface HabitState {
-  habits: Habit[];
+interface TaskState {
+  tasks: Task[];
 }
 
-const initialState: HabitState = { habits: [] };
+const initialState: TaskState = { tasks: [] };
 
 const habitSlice = createSlice({
-  name: "habits",
+  name: "tasks",
   initialState,
   reducers: {
-    addHabit(
-      state,
-      action: PayloadAction<{ name: string; frequency: string }>
-    ) {
-      const newHabit = {
+    addTask(state, action: PayloadAction<{ name: string; frequency: string }>) {
+      const newTask = {
         id: Date.now().toString(),
         createdAt: new Date().toISOString(),
         completedDates: [""],
         name: action.payload.name,
         frequency: action.payload.frequency,
       };
-      state.habits.push(newHabit);
+      state.tasks.push(newTask);
     },
   },
 });
 
-export const { addHabit } = habitSlice.actions;
+export const { addTask } = habitSlice.actions;
 export default habitSlice.reducer;

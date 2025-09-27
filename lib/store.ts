@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import habitReducer from "./features/habitSlice";
+import taskReducer from "./features/taskSlice";
 
 export const makeStore = () => {
-  return configureStore({ reducer: { habits: habitReducer } });
+  return configureStore({ reducer: { tasks: taskReducer } });
 };
 
-export type HabitStore = ReturnType<typeof makeStore>;
-export type HabitState = ReturnType<HabitStore["getState"]>;
-export type HabitDispatch = HabitStore["dispatch"];
+export type TaskStore = ReturnType<typeof makeStore>;
+export type TaskState = ReturnType<TaskStore["getState"]>;
+export type TaskDispatch = TaskStore["dispatch"];

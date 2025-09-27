@@ -8,21 +8,20 @@ import {
   MenuItem,
   Select,
   TextField,
+  Typography,
 } from "@mui/material";
-import { addHabit } from "@/lib/features/habitSlice";
-import { AppDispatch } from "@/lib/store";
-import { useDispatch } from "react-redux";
-import { useHabitDispatch } from "@/lib/hook";
+import { addTask } from "@/lib/features/taskSlice";
+import { useTaskDispatch } from "@/lib/hook";
 
-const AddHabitForm: React.FC = () => {
-  const dispatch = useHabitDispatch();
+const AddTaskForm: React.FC = () => {
+  const dispatch = useTaskDispatch();
   const [name, setName] = useState<string>("");
   const [frequency, setFrequency] = useState<"daily" | "weekly">("daily");
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (name.trim()) {
       dispatch(
-        addHabit({
+        addTask({
           frequency,
           name,
         })
@@ -33,9 +32,12 @@ const AddHabitForm: React.FC = () => {
   return (
     <form onSubmit={handleSubmit}>
       <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+        <Typography textAlign="center" variant="h2">
+          Ambition Achiever
+        </Typography>
         <TextField
           label="Haibt Name"
-          placeholder="Enter Habit Name"
+          placeholder="Enter Task Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
@@ -57,4 +59,4 @@ const AddHabitForm: React.FC = () => {
   );
 };
 
-export default AddHabitForm;
+export default AddTaskForm;

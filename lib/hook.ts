@@ -1,6 +1,6 @@
 import { useDispatch, useSelector, useStore } from "react-redux";
-import type { HabitState, HabitDispatch, HabitStore } from "./store";
+import type { TaskState, TaskDispatch, TaskStore } from "./store";
 
-export const useHabitDispatch = useDispatch.withTypes<HabitDispatch>();
-export const useHabitSelector = useSelector.withTypes<HabitState>();
-export const useHabitStore = useStore.withTypes<HabitStore>();
+export const useTaskDispatch = useDispatch.withTypes<TaskDispatch>();
+export const useTaskSelector = useSelector.withTypes<TaskState>();
+export const useTaskStore = useStore.withTypes<TaskStore>();
