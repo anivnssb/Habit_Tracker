@@ -36,7 +36,7 @@ const AddTaskForm: React.FC = () => {
           Ambition Achiever
         </Typography>
         <TextField
-          label="Haibt Name"
+          label="Task Name"
           placeholder="Enter Task Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
