@@ -2,9 +2,9 @@ import { configureStore } from "@reduxjs/toolkit";
 import habitReducer from "./features/habitSlice";
 
 export const makeStore = () => {
-  return configureStore({ reducer: { habitReducer } });
+  return configureStore({ reducer: { habits: habitReducer } });
 };
 
-export type AppStore = ReturnType<typeof makeStore>;
-export type RootState = ReturnType<AppStore["getState"]>;
-export type AppDispatch = AppStore["dispatch"];
+export type HabitStore = ReturnType<typeof makeStore>;
+export type HabitState = ReturnType<HabitStore["getState"]>;
+export type HabitDispatch = HabitStore["dispatch"];

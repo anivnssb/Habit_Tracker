@@ -1,14 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-export interface Habit {
+interface Habit {
   id: string;
   name: string;
   frequency: string;
   completedDates: string[];
   createdAt: string;
 }
-export interface HabitState {
+interface HabitState {
   habits: Habit[];
 }
 
