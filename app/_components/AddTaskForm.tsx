@@ -33,7 +33,7 @@ const AddTaskForm: React.FC = () => {
     <form onSubmit={handleSubmit}>
       <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
         <Typography textAlign="center" variant="h2">
-          Ambition Achiever
+          Ambition Tracker
         </Typography>
         <TextField
           label="Task Name"
