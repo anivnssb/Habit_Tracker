@@ -10,8 +10,8 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { addTask } from "@/lib/features/taskSlice";
-import { useTaskDispatch } from "@/lib/hook";
+import { addTask } from "@/store/features/taskSlice";
+import { useTaskDispatch } from "@/store/hook";
 
 const AddTaskForm: React.FC = () => {
   const dispatch = useTaskDispatch();

@@ -3,8 +3,8 @@ import React from "react";
 import { Box, Button, Grid, Paper, Typography } from "@mui/material";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import { useTaskDispatch, useTaskSelector } from "@/lib/hook";
-import { removeTask } from "@/lib/features/taskSlice";
+import { useTaskDispatch, useTaskSelector } from "@/store/hook";
+import { removeTask } from "@/store/features/taskSlice";
 
 const TaskList: React.FC = () => {
   const dispatch = useTaskDispatch();

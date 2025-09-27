@@ -1,9 +1,9 @@
 import Button from "@mui/material/Button";
 import styles from "./page.module.css";
-import AddTaskForm from "./_components/AddTaskForm";
+import AddTaskForm from "../components/AddTaskForm";
 import { Container } from "@mui/material";
-import StoreProvider from "./StoreProvider";
-import TaskList from "./_components/TaskList";
+import StoreProvider from "../store/StoreProvider";
+import TaskList from "../components/TaskList";
 
 export default function Home() {
   return (

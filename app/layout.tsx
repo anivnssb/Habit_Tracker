@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import { Roboto } from "next/font/google";
 import { ThemeProvider } from "@mui/material/styles";
-import theme from "./theme/theme";
+import theme from "../theme/theme";
 
 const roboto = Roboto({
   weight: ["300", "400", "500", "700"],
@@ -12,7 +12,7 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-  title: "Ambition Achiever",
+  title: "Ambition Tracker",
   description: "Monitor and Cultivate Good Habits",
 };
 
