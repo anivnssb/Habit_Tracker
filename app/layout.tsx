@@ -12,7 +12,7 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-  title: "Habit Tracker",
+  title: "Ambition Achiever",
   description: "Monitor and Cultivate Good Habits",
 };
 

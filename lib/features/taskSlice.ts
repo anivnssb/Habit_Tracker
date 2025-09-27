@@ -28,8 +28,12 @@ const habitSlice = createSlice({
       };
       state.tasks.push(newTask);
     },
+    removeTask(state, action: PayloadAction<{ id: string }>) {
+      const index = state.tasks.findIndex(({ id }) => id === action.payload.id);
+      state.tasks.splice(index, 1);
+    },
   },
 });
 
-export const { addTask } = habitSlice.actions;
+export const { addTask, removeTask } = habitSlice.actions;
 export default habitSlice.reducer;
