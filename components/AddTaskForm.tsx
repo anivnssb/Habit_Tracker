@@ -14,6 +14,7 @@ import { addTask } from "@/store/features/taskSlice";
 import { useTaskDispatch } from "@/store/hook";
 
 const AddTaskForm: React.FC = () => {
+  const url = process.env.BASE_URL;
   const dispatch = useTaskDispatch();
   const [name, setName] = useState<string>("");
   const [frequency, setFrequency] = useState<"daily" | "weekly">("daily");
@@ -27,6 +28,23 @@ const AddTaskForm: React.FC = () => {
         })
       );
     }
+  };
+
+  const createTask = async () => {
+    fetch("http://localhost:3001/api" + "/createtask", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        task_name: name,
+        frequency,
+      }),
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -51,7 +69,12 @@ const AddTaskForm: React.FC = () => {
             <MenuItem value="weekly">Weekly</MenuItem>
           </Select>
         </FormControl>
-        <Button type="submit" variant="contained" color="secondary">
+        <Button
+          type="submit"
+          variant="contained"
+          color="secondary"
+          onClick={createTask}
+        >
           Add
         </Button>
       </Box>
