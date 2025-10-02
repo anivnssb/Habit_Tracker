@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { Box, Button, Grid, Paper, Typography } from "@mui/material";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
@@ -9,6 +9,21 @@ import { removeTask } from "@/store/features/taskSlice";
 const TaskList: React.FC = () => {
   const dispatch = useTaskDispatch();
   const { tasks } = useTaskSelector((state) => state.tasks);
+  const getTasks = async () => {
+    fetch("http://localhost:3000/api" + "/gettask", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    getTasks();
+  }, []);
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 4 }}>
       {tasks.map((task) => (
