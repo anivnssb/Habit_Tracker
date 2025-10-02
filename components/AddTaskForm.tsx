@@ -12,39 +12,17 @@ import {
 } from "@mui/material";
 import { addTask } from "@/store/slice/taskSlice";
 import { useTaskDispatch } from "@/store/hook";
+import { useAddTaskMutation } from "@/store/api";
 
 const AddTaskForm: React.FC = () => {
-  const url = process.env.BASE_URL;
-  const dispatch = useTaskDispatch();
+  const [addTask, { isLoading }] = useAddTaskMutation();
   const [name, setName] = useState<string>("");
   const [frequency, setFrequency] = useState<"daily" | "weekly">("daily");
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (name.trim()) {
-      dispatch(
-        addTask({
-          frequency,
-          name,
-        })
-      );
+      addTask({ task_name: name, frequency });
     }
-  };
-
-  const createTask = async () => {
-    fetch(process.env.NEXT_PUBLIC_BASE_URL + "/createtask", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        task_name: name,
-        frequency,
-      }),
-    })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => console.log(err));
   };
 
   return (
@@ -69,12 +47,7 @@ const AddTaskForm: React.FC = () => {
             <MenuItem value="weekly">Weekly</MenuItem>
           </Select>
         </FormControl>
-        <Button
-          type="submit"
-          variant="contained"
-          color="secondary"
-          onClick={createTask}
-        >
+        <Button type="submit" variant="contained" color="secondary">
           Add
         </Button>
       </Box>
