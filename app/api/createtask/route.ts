@@ -4,13 +4,9 @@ import { taskTable } from "../../../model/schema";
 
 export async function POST(request: NextRequest) {
   console.log("printing request");
-  const result = await request.json();
-  console.log(result);
-  return NextResponse.json({ message: "api call successful" }, { status: 200 });
-  // const newTask: typeof taskTable.$inferInsert = {
-  //   task_name: "study",
-  //   frequency: 10,
-  // };
-  // await db.insert(taskTable).values(newTask);
-  // console.log("New user created!");
+  const { task_name, frequency } = await request.json();
+  const newTask: typeof taskTable.$inferInsert = { task_name, frequency };
+  const task = await db.insert(taskTable).values(newTask);
+  console.log(user);
+  return NextResponse.json({ message: "New user created!" }, { status: 200 });
 }
