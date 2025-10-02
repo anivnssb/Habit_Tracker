@@ -10,7 +10,7 @@ const TaskList: React.FC = () => {
   const dispatch = useTaskDispatch();
   const { tasks } = useTaskSelector((state) => state.tasks);
   const getTasks = async () => {
-    fetch("http://localhost:3000/api" + "/gettask", {
+    fetch(process.env.NEXT_PUBLIC_BASE_URL + "/gettask", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

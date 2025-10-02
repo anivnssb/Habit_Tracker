@@ -31,7 +31,7 @@ const AddTaskForm: React.FC = () => {
   };
 
   const createTask = async () => {
-    fetch("http://localhost:3000/api" + "/createtask", {
+    fetch(process.env.NEXT_PUBLIC_BASE_URL + "/createtask", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
