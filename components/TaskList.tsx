@@ -5,7 +5,7 @@ import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutli
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { useTaskDispatch, useTaskSelector } from "@/store/hook";
 import { removeTask } from "@/store/slice/taskSlice";
-import { useGetTasksQuery } from "@/store/api";
+import { useGetTasksQuery, useDeleteTaskMutation } from "@/store/api";
 
 const TaskList: React.FC = () => {
   const {
@@ -13,19 +13,8 @@ const TaskList: React.FC = () => {
     isLoading,
     error,
   } = useGetTasksQuery();
+  const [deleteTask] = useDeleteTaskMutation();
   const dispatch = useTaskDispatch();
-  // const getTasks = async () => {
-  //   fetch(process.env.NEXT_PUBLIC_BASE_URL + "/gettask", {
-  //     method: "GET",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //   })
-  //     .then((res) => {
-  //       console.log(res);
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 4 }}>
@@ -58,7 +47,7 @@ const TaskList: React.FC = () => {
                   Mark Complete
                 </Button>
                 <Button
-                  onClick={() => dispatch(removeTask({ id: task.id }))}
+                  onClick={() => deleteTask(Number(task.id))}
                   color="error"
                 >
                   Remove

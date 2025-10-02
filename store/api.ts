@@ -8,7 +8,6 @@ export interface Task {
   completed_date: string;
 }
 
-// Define a service using a base URL and expected endpoints
 export const taskApi = createApi({
   reducerPath: "taskApi",
   baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_BASE_URL }),
@@ -27,7 +26,7 @@ export const taskApi = createApi({
             ]
           : [{ type: "Task", id: "LIST" }],
     }),
-    addTask: build.mutation<Task, Partial<Task>>({
+    addTask: build.mutation<{ message: string }, Partial<Task>>({
       query: (newTask) => ({
         url: "/createtask",
         method: "POST",
@@ -35,9 +34,15 @@ export const taskApi = createApi({
       }),
       invalidatesTags: [{ type: "Task", id: "LIST" }],
     }),
+    deleteTask: build.mutation<{ message: string }, number>({
+      query: (id) => ({
+        url: `/deletetask/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [{ type: "Task", id: "LIST" }],
+    }),
   }),
 });
 
-// Export hooks for usage in functional components, which are
-// auto-generated based on the defined endpoints
-export const { useGetTasksQuery, useAddTaskMutation } = taskApi;
+export const { useGetTasksQuery, useAddTaskMutation, useDeleteTaskMutation } =
+  taskApi;
