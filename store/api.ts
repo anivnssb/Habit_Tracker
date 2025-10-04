@@ -1,12 +1,6 @@
 // store/api.ts
+import { Task } from "@/utils/types";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
-export interface Task {
-  id: string;
-  task_name: string;
-  frequency: string;
-  completed_date: string;
-}
 
 export const taskApi = createApi({
   reducerPath: "taskApi",
@@ -34,6 +28,13 @@ export const taskApi = createApi({
       }),
       invalidatesTags: [{ type: "Task", id: "LIST" }],
     }),
+    markComplete: build.mutation<{ message: string }, number>({
+      query: (id) => ({
+        url: `/markcomplete/${id}`,
+        method: "PUT",
+      }),
+      invalidatesTags: [{ type: "Task", id: "LIST" }],
+    }),
     deleteTask: build.mutation<{ message: string }, number>({
       query: (id) => ({
         url: `/deletetask/${id}`,
@@ -44,5 +45,9 @@ export const taskApi = createApi({
   }),
 });
 
-export const { useGetTasksQuery, useAddTaskMutation, useDeleteTaskMutation } =
-  taskApi;
+export const {
+  useGetTasksQuery,
+  useAddTaskMutation,
+  useMarkCompleteMutation,
+  useDeleteTaskMutation,
+} = taskApi;
