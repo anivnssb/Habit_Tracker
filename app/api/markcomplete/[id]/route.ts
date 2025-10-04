@@ -10,24 +10,29 @@ interface Params {
 
 export async function PUT(request: NextRequest, { params }: Params) {
   let { id } = await params;
-  let taskId = Number(id);
-
+  const { remove } = await request.json();
+  console.log("remove", remove);
   const result = await db
     .select({ completed_dates: taskTable.completed_dates })
     .from(taskTable)
-    .where(eq(taskTable.id, taskId));
+    .where(eq(taskTable.id, Number(id)));
 
   const { completed_dates } = result[0] as {
     completed_dates: { dates: string[] };
   };
-
-  const formattedDate = formatDate(new Date());
+  if (remove) {
+    completed_dates.dates.splice(completed_dates.dates.length - 1, 1);
+  }
   await db
     .update(taskTable)
     .set({
-      completed_dates: { dates: [...completed_dates.dates, formattedDate] },
+      completed_dates: {
+        dates: remove
+          ? completed_dates.dates
+          : [...completed_dates.dates, formatDate(new Date())],
+      },
     })
-    .where(eq(taskTable.id, taskId));
+    .where(eq(taskTable.id, Number(id)));
   return NextResponse.json(
     { message: "Task Updated Successfully!" },
     { status: 200 }

@@ -4,11 +4,11 @@ import { eq } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
 
 interface Params {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 export async function DELETE(request: NextRequest, { params }: Params) {
-  const id = Number(params.id);
-  await db.delete(taskTable).where(eq(taskTable.id, id));
+  const { id } = await params;
+  await db.delete(taskTable).where(eq(taskTable.id, Number(id)));
   return NextResponse.json(
     { message: "Task Deleted Successfully!" },
     { status: 200 }
