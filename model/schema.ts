@@ -10,5 +10,5 @@ export const taskTable = mysqlTable("tasks_table", {
   id: serial().primaryKey(),
   task_name: varchar({ length: 255 }).notNull(),
   frequency: mysqlEnum(["daily", "weekly"]).notNull(),
-  completed_dates: json(),
+  completed_dates: json().default({ dates: [] }),
 });
