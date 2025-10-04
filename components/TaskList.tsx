@@ -54,9 +54,23 @@ const TaskList: React.FC = () => {
                     )
                   }
                   variant="outlined"
-                  onClick={() => markComplete(Number(task.id))}
+                  onClick={() =>
+                    markComplete({
+                      id: Number(task.id),
+                      remove:
+                        formatDate(new Date()) ===
+                        task.completed_dates.dates[
+                          task.completed_dates.dates.length - 1
+                        ],
+                    })
+                  }
                 >
-                  Mark Complete
+                  {formatDate(new Date()) ===
+                  task.completed_dates.dates[
+                    task.completed_dates.dates.length - 1
+                  ]
+                    ? "Complete"
+                    : "Mark Complete"}
                 </Button>
                 <Button
                   onClick={() => deleteTask(Number(task.id))}
