@@ -1,11 +1,14 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import { Box, Button, Grid, Paper, Typography } from "@mui/material";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import { useTaskDispatch, useTaskSelector } from "@/store/hook";
-import { removeTask } from "@/store/slice/taskSlice";
-import { useGetTasksQuery, useDeleteTaskMutation } from "@/store/api";
+import {
+  useGetTasksQuery,
+  useDeleteTaskMutation,
+  useMarkCompleteMutation,
+} from "@/store/api";
+import { formatDate } from "@/utils/functions";
 
 const TaskList: React.FC = () => {
   const {
@@ -14,8 +17,7 @@ const TaskList: React.FC = () => {
     error,
   } = useGetTasksQuery();
   const [deleteTask] = useDeleteTaskMutation();
-  const dispatch = useTaskDispatch();
-
+  const [markComplete] = useMarkCompleteMutation();
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 4 }}>
       {tasks.tasklist.map((task) => (
@@ -41,8 +43,18 @@ const TaskList: React.FC = () => {
             <Grid>
               <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 1 }}>
                 <Button
-                  startIcon={<CheckCircleOutlineOutlinedIcon />}
+                  startIcon={
+                    formatDate(new Date()) ===
+                    task.completed_dates.dates[
+                      task.completed_dates.dates.length - 1
+                    ] ? (
+                      <CheckCircleIcon />
+                    ) : (
+                      <CheckCircleOutlineOutlinedIcon />
+                    )
+                  }
                   variant="outlined"
+                  onClick={() => markComplete(Number(task.id))}
                 >
                   Mark Complete
                 </Button>
