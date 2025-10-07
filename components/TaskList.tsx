@@ -8,7 +8,9 @@ import {
   useDeleteTaskMutation,
   useMarkCompleteMutation,
 } from "@/store/api";
-import { formatDate } from "@/utils/functions";
+
+import { eachDayOfInterval, startOfWeek, endOfWeek, format } from "date-fns";
+import { Task } from "@/utils/types";
 
 const TaskList: React.FC = () => {
   const {
@@ -16,8 +18,34 @@ const TaskList: React.FC = () => {
     isLoading,
     error,
   } = useGetTasksQuery();
+
   const [deleteTask] = useDeleteTaskMutation();
   const [markComplete] = useMarkCompleteMutation();
+
+  const thisWeek = (): string[] => {
+    const today = new Date();
+    const weekStart = startOfWeek(today);
+    const weekEnd = endOfWeek(today);
+    const daysOfWeek = eachDayOfInterval({
+      start: weekStart,
+      end: weekEnd,
+    });
+    const formattedDays: string[] = daysOfWeek.map((day: Date) =>
+      format(day, "dd/MM/yyyy")
+    );
+    return formattedDays;
+  };
+  const checkCompleted = (task: Task): boolean => {
+    return (
+      (task.frequency === "daily" &&
+        format(new Date(), "dd/MM/yyyy") ===
+          task.completed_dates.dates[task.completed_dates.dates.length - 1]) ||
+      (task.frequency === "weekly" &&
+        thisWeek().includes(
+          task.completed_dates.dates[task.completed_dates.dates.length - 1]
+        ))
+    );
+  };
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 4 }}>
       {tasks.tasklist.map((task) => (
@@ -44,10 +72,7 @@ const TaskList: React.FC = () => {
               <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 1 }}>
                 <Button
                   startIcon={
-                    formatDate(new Date()) ===
-                    task.completed_dates.dates[
-                      task.completed_dates.dates.length - 1
-                    ] ? (
+                    checkCompleted(task) ? (
                       <CheckCircleIcon />
                     ) : (
                       <CheckCircleOutlineOutlinedIcon />
@@ -57,20 +82,12 @@ const TaskList: React.FC = () => {
                   onClick={() =>
                     markComplete({
                       id: Number(task.id),
-                      remove:
-                        formatDate(new Date()) ===
-                        task.completed_dates.dates[
-                          task.completed_dates.dates.length - 1
-                        ],
+                      remove: checkCompleted(task),
+                      date: format(new Date(), "dd/MM/yyyy"),
                     })
                   }
                 >
-                  {formatDate(new Date()) ===
-                  task.completed_dates.dates[
-                    task.completed_dates.dates.length - 1
-                  ]
-                    ? "Complete"
-                    : "Mark Complete"}
+                  {checkCompleted(task) ? "Complete" : "Mark Complete"}
                 </Button>
                 <Button
                   onClick={() => deleteTask(Number(task.id))}

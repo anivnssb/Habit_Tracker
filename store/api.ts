@@ -30,12 +30,12 @@ export const taskApi = createApi({
     }),
     markComplete: build.mutation<
       { message: string },
-      { remove: boolean; id: number }
+      { remove: boolean; id: number; date: string }
     >({
-      query: ({ id, remove }) => ({
+      query: ({ id, remove, date }) => ({
         url: `/markcomplete/${id}`,
         method: "PUT",
-        body: { remove },
+        body: { remove, date },
       }),
       invalidatesTags: [{ type: "Task", id: "LIST" }],
     }),

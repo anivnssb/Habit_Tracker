@@ -1,4 +1,3 @@
-import { formatDate } from "@/utils/functions";
 import { db } from "@/db/db";
 import { taskTable } from "@/model/schema";
 import { eq } from "drizzle-orm";
@@ -10,7 +9,7 @@ interface Params {
 
 export async function PUT(request: NextRequest, { params }: Params) {
   let { id } = await params;
-  const { remove } = await request.json();
+  const { remove, date } = await request.json();
   console.log("remove", remove);
   const result = await db
     .select({ completed_dates: taskTable.completed_dates })
@@ -29,7 +28,7 @@ export async function PUT(request: NextRequest, { params }: Params) {
       completed_dates: {
         dates: remove
           ? completed_dates.dates
-          : [...completed_dates.dates, formatDate(new Date())],
+          : [...completed_dates.dates, date],
       },
     })
     .where(eq(taskTable.id, Number(id)));
